@@ -1,0 +1,3 @@
+# spiceterm
+
+SPICE terminal emulator

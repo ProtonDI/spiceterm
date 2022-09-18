@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: ZHANG Yuntian <yuntian@protoducer.com>
+Date: Sun, 11 Sep 2022 01:45:13 +0800
+Subject: [PATCH] Update build dependencies
+
+---
+ debian/control | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/debian/control b/debian/control
+index 61c67e4..5ecabc7 100644
+--- a/debian/control
++++ b/debian/control
+@@ -6,6 +6,7 @@ Build-Depends: debhelper (>= 12),
+                libglib2.0-dev,
+                libspice-protocol-dev,
+                libspice-server-dev,
++               lintian,
+ Standards-Version: 4.1.3
+ 
+ Package: spiceterm
+-- 
+2.37.2
+

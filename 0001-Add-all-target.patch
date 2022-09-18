@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: ZHANG Yuntian <yuntian@protoducer.com>
+Date: Sun, 11 Sep 2022 00:14:31 +0800
+Subject: [PATCH] Add all target
+
+---
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index db644b5..785a067 100644
+--- a/Makefile
++++ b/Makefile
+@@ -12,6 +12,8 @@ DEB=${PACKAGE}_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
+ DBG_DEB=${PACKAGE}-dbgsym_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
+ DSC=${PACKAGE}_${DEB_VERSION_UPSTREAM_REVISION}.dsc
+ 
++all: deb
++
+ ${BUILDDIR}: src/ debian/
+ 	rm -rf $(BUILDDIR)
+ 	rsync -a src/ debian $(BUILDDIR)
+-- 
+2.37.2
+

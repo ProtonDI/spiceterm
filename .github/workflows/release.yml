@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 9 * * *"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Build
+        uses: ProtonDI/proxmox-make-action@main
+      - name: Check for modified files
+        id: git-check
+        run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
+      - name: Commit changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          pushd .src
+          PACKAGE_VERSION="$(git log --pretty=oneline -n 1 | awk '{print $5}')"
+          popd
+          git add .
+          git commit -m "bump version to $PACKAGE_VERSION"
+          git push
+          echo "tag_name=$PACKAGE_VERSION" >> $GITHUB_ENV
+      - name: Release
+        if: steps.git-check.outputs.modified == 'true'
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.tag_name }}
+          body_path: README.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target_commitish: main
+          draft: false
+          files: |
+            .output/*.deb
