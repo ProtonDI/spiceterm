@@ -1,0 +1,4 @@
+[submodule ".src"]
+	path = .src
+	url = https://github.com/ProtonDI/spiceterm
+	branch = upstream
